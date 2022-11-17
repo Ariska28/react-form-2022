@@ -9,6 +9,10 @@
     width: 100%;
 }
 
+.header svg {
+    height: 60px;
+}
+
 .list {
     margin-left: auto;
 }

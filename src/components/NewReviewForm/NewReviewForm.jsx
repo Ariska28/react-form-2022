@@ -2,6 +2,10 @@ import styles from "./styles.module.css";
 import classnames from "classnames";
 import { useReducer } from "react";
 import { Rating } from "../Rating/Rating";
+import { useRef } from "react";
+import emailjs from '@emailjs/browser';
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 
 const INITIAL_FORM_VALUE = {
@@ -12,22 +16,22 @@ const INITIAL_FORM_VALUE = {
 };
 
 const ERROR_MESSAGES = {
-  empty: "Requared field",
-  maxLength: "Uncorrect string length: max length 5",
-  email: "Input correct email"
+  EMPTY: "Requared field",
+  MAXLENGTH: "Uncorrect string length: max length 5",
+  ENAIL: "Input correct email"
 }
 
 const ACTIONS = {
-  setName: "setName",
-  setText: "setText",
-  setEmail: "setEmail",
-  setRating: "setRating",
-  clear: "clear",
+  SETNAME: "setName",
+  SETTEXT: "setText",
+  SETEMAIL: "setEmail",
+  SETRATING: "setRating",
+  CLEAR: "clear",
 };
 
 const formReducer = (state, action) => {
   switch(action.type) {
-    case ACTIONS.setName:  {
+    case ACTIONS.SETNAME:  {
       return {
         ...state, 
         name: { 
@@ -39,7 +43,7 @@ const formReducer = (state, action) => {
       }
     }
 
-    case ACTIONS.setText: {
+    case ACTIONS.SETTEXT: {
       return {
         ...state, 
         text: {
@@ -50,7 +54,7 @@ const formReducer = (state, action) => {
       }
     }
 
-    case ACTIONS.setEmail: {
+    case ACTIONS.SETEMAIL: {
       return {
         ...state, 
         email: {
@@ -62,14 +66,14 @@ const formReducer = (state, action) => {
       }
     }
 
-    case ACTIONS.setRating: {
+    case ACTIONS.SETRATING: {
       return {
         ...state,
         rating: action.payload
       }
     }
 
-    case ACTIONS.clear: {
+    case ACTIONS.CLEAR: {
       return INITIAL_FORM_VALUE;
     }
 
@@ -81,18 +85,18 @@ const formReducer = (state, action) => {
 const validation = {
   isEmpty: (value) => {
     if (value.length < 1) {
-      console.log(new Error(ERROR_MESSAGES.empty));
+      console.log(new Error(ERROR_MESSAGES.EMPTY));
       return { hasError: true }
     }
   },
   maxLength: (value) => {
     if (value.length > 5) {
-      console.log(new Error(ERROR_MESSAGES.maxLength));
+      console.log(new Error(ERROR_MESSAGES.MAXLENGTH));
       return { hasError: true }
     }  
   },
   isCorrectEmail: (value) => {
-    console.log(new Error(ERROR_MESSAGES.email));
+    console.log(new Error(ERROR_MESSAGES.EMAIL));
     if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value))) {
       return { hasError: true }
     }
@@ -104,7 +108,7 @@ const addValidationStyles = (hasError, touched) => {
     return styles.error;
   }
 
-  if(touched) {
+  if (touched) {
     return styles.succes;
   }
 }
@@ -112,21 +116,47 @@ const addValidationStyles = (hasError, touched) => {
 export const NewReviewForm = ({ className }) => {
   const [formValue, dispatch] = useReducer(formReducer, INITIAL_FORM_VALUE);
 
+  const [formError, setformError] = useState();
+  const form = useRef();
+  const navigate = useNavigate();
+  const formHasError = Object.values(formValue).some(item => {
+    return (item.hasError === true || item.touched === false)
+  });
+
   const onNameChange = (event) => {
-    dispatch({ type: ACTIONS.setName, payload: event.target.value });
+    dispatch({ type: ACTIONS.SETNAME, payload: event.target.value });
   };
   const onTextChange = (event) => {
-    dispatch({ type: ACTIONS.setText, payload: event.target.value });
+    dispatch({ type: ACTIONS.SETTEXT, payload: event.target.value });
   };
   const onEmailChange = (event) => {
-    dispatch({ type: ACTIONS.setEmail, payload: event.target.value });
+    dispatch({ type: ACTIONS.SETEMAIL, payload: event.target.value });
   };
   const onRatingChange = (value) => {
-    dispatch({ type: ACTIONS.setRating, payload: value });
+    dispatch({ type: ACTIONS.SETRATING, payload: value });
   };
 
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    if(!formHasError) { 
+      emailjs.sendForm('service_2r89coa', 'template_ja45kem', form.current, '4L5g0rGznARsA0Xfu')
+        .then((result) => { 
+          navigate('/success');
+        }, (error) => {
+          navigate('/error');
+        });
+    }
+  }
+
+  const addErrorMessage = () => {
+    if(formHasError) {
+      setformError(<div className={styles.error}> Form wasn't sent, please fix mistakes </div>)
+    } 
+  }
+
   return (
-    <div className={classnames(styles.root, className)}>
+    <form ref={form} onSubmit={sendEmail} className={classnames(styles.root, className)}>
       <div className={classnames(styles.formControl, addValidationStyles(formValue.name.hasError, formValue.name.touched))}>
         <label htmlFor="name">Name</label>
         <input
@@ -159,8 +189,13 @@ export const NewReviewForm = ({ className }) => {
       <div className={styles.formControl}>
         <label>Choose rating</label>
         <Rating value={formValue.rating} onChange={onRatingChange} />
+        <input className={styles.hidden} name="rating"  type="number"  value={formValue.rating} onChange={onRatingChange}/>
       </div>
-      <button className={styles.clear} onClick={() => dispatch({ type: ACTIONS.clear })}>Clear</button>
-    </div>
+      { formError }
+      <div className={styles.buttons}>
+        <input className={styles.clear}  onClick={addErrorMessage} type="submit" value="Send" />
+        <button className={styles.clear} onClick={() => dispatch({ type: ACTIONS.CLEAR })}>Clear</button>
+      </div>
+    </form>
   );
 };
