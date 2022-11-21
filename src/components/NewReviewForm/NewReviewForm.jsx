@@ -7,12 +7,11 @@ import emailjs from '@emailjs/browser';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-
 const INITIAL_FORM_VALUE = {
-  name: {value: "", touched: false, hasError: false },
-  text: {value: "", touched: false, hasError: false },
-  email: {value: "", touched: false, hasError: false },
-  rating: 1,
+  NAME: {value: "", touched: false, hasError: false },
+  TEXT: {value: "", touched: false, hasError: false },
+  EMAIL: {value: "", touched: false, hasError: false },
+  RATING: 1,
 };
 
 const ERROR_MESSAGES = {
@@ -34,7 +33,7 @@ const formReducer = (state, action) => {
     case ACTIONS.SETNAME:  {
       return {
         ...state, 
-        name: { 
+        NAME: { 
           value: action.payload, 
           touched: true,
           ...validation.isEmpty(action.payload), 
@@ -46,7 +45,7 @@ const formReducer = (state, action) => {
     case ACTIONS.SETTEXT: {
       return {
         ...state, 
-        text: {
+        TEXT: {
           value: action.payload,
           touched: true,
           ...validation.isEmpty(action.payload),
@@ -57,7 +56,7 @@ const formReducer = (state, action) => {
     case ACTIONS.SETEMAIL: {
       return {
         ...state, 
-        email: {
+        EMAIL: {
           value: action.payload,
           touched: true,
           ...validation.isEmpty(action.payload),
@@ -69,7 +68,7 @@ const formReducer = (state, action) => {
     case ACTIONS.SETRATING: {
       return {
         ...state,
-        rating: action.payload
+        RATING: action.payload
       }
     }
 
@@ -111,6 +110,30 @@ const addValidationStyles = (hasError, touched) => {
   if (touched) {
     return styles.succes;
   }
+}
+
+export const FormElement = ({ value, onChange, type, className }) => {
+  return (
+    <div className={classnames(styles.formControl, className)}>
+      <label htmlFor={type}>{type}</label>
+      <input
+        name={type}
+        type="text"
+        value={value}
+        onChange={onChange}
+      />
+    </div>
+  )
+}
+
+export const FormElementPicker = ({ name, value, onChange, type }) => {
+  return (
+    <div className={styles.formControl}>
+      <label>Choose {name}</label>
+      <Rating value={value} onChange={onChange} />
+      <input className={styles.hidden} name={name}  type={type}  value={value} onChange={onChange}/>
+    </div>
+  )
 }
 
 export const NewReviewForm = ({ className }) => {
@@ -157,43 +180,35 @@ export const NewReviewForm = ({ className }) => {
 
   return (
     <form ref={form} onSubmit={sendEmail} className={classnames(styles.root, className)}>
-      <div className={classnames(styles.formControl, addValidationStyles(formValue.name.hasError, formValue.name.touched))}>
-        <label htmlFor="name">Name</label>
-        <input
-          name="name"
-          type="text"
-          value={formValue.name.value}
-          onChange={onNameChange}
-        />
-      </div>
-      <div className={classnames(styles.formControl, addValidationStyles(formValue.text.hasError, formValue.text.touched))}>
-        <label htmlFor="text">Text</label>
-        <input
-          name="text"
-          type="text"
-          className={styles.input}
-          value={formValue.text.value}
-          onChange={onTextChange}
-        />
-      </div>
-      <div className={classnames(styles.formControl, addValidationStyles(formValue.email.hasError, formValue.email.touched))}>
-        <label htmlFor="text">Email</label>
-        <input
-          name="text"
-          type="email"
-          className={styles.input}
-          value={formValue.email.value}
-          onChange={onEmailChange}
-        />
-      </div> 
-      <div className={styles.formControl}>
-        <label>Choose rating</label>
-        <Rating value={formValue.rating} onChange={onRatingChange} />
-        <input className={styles.hidden} name="rating"  type="number"  value={formValue.rating} onChange={onRatingChange}/>
-      </div>
+      <FormElement 
+        value={formValue.NAME.value} 
+        onChange={onNameChange} 
+        type="name" 
+        className={addValidationStyles(formValue.NAME.hasError, formValue.NAME.touched)}
+      />
+      <FormElement 
+        value={formValue.TEXT.value} 
+        onChange={onTextChange} 
+        type="text" 
+        className={addValidationStyles(formValue.TEXT.hasError, formValue.TEXT.touched)}
+      />
+      <FormElement 
+        value={formValue.EMAIL.value} 
+        onChange={onEmailChange} 
+        type="email" 
+        className={addValidationStyles(formValue.EMAIL.hasError, formValue.EMAIL.touched)}
+      />
+      <FormElementPicker
+        name="rating"
+        value={formValue.RATING}
+        onChange={onRatingChange}
+        type="number"
+      />
+
       { formError }
+
       <div className={styles.buttons}>
-        <input className={styles.clear}  onClick={addErrorMessage} type="submit" value="Send" />
+        <button className={styles.clear}  onClick={addErrorMessage} type="submit">Send</button>
         <button className={styles.clear} onClick={() => dispatch({ type: ACTIONS.CLEAR })}>Clear</button>
       </div>
     </form>
