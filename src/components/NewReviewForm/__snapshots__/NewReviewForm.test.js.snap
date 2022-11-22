@@ -1,0 +1,182 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Jest Snapshot test FormElement component Match to DOM Snapshot 1`] = `
+<div
+  className="formControl"
+>
+  <label />
+  <input
+    type="text"
+  />
+</div>
+`;
+
+exports[`Jest Snapshot test FormElementPicker component Match to DOM Snapshot 1`] = `
+<div
+  className="formControl"
+>
+  <label>
+    Choose 
+  </label>
+  <div
+    className="container"
+  >
+    <div>
+      <img
+        className="star m"
+        loading="lazy"
+        onClick={[Function]}
+        src="star-gold.svg"
+      />
+      <img
+        className="star m"
+        loading="lazy"
+        onClick={[Function]}
+        src="star-gold.svg"
+      />
+      <img
+        className="star m"
+        loading="lazy"
+        onClick={[Function]}
+        src="star-gold.svg"
+      />
+      <img
+        className="star m"
+        loading="lazy"
+        onClick={[Function]}
+        src="star-gold.svg"
+      />
+      <img
+        className="star m"
+        loading="lazy"
+        onClick={[Function]}
+        src="star-gold.svg"
+      />
+    </div>
+  </div>
+  <input
+    className="hidden"
+  />
+</div>
+`;
+
+exports[`Jest Snapshot test newReviewForm component Match to DOM Snapshot 1`] = `
+<form
+  className="root"
+  onSubmit={[Function]}
+>
+  <div
+    className="formControl"
+  >
+    <label
+      htmlFor="name"
+    >
+      name
+    </label>
+    <input
+      name="name"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="formControl"
+  >
+    <label
+      htmlFor="text"
+    >
+      text
+    </label>
+    <input
+      name="text"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="formControl"
+  >
+    <label
+      htmlFor="email"
+    >
+      email
+    </label>
+    <input
+      name="email"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="formControl"
+  >
+    <label>
+      Choose 
+      rating
+    </label>
+    <div
+      className="container"
+    >
+      <div>
+        <img
+          className="star m"
+          loading="lazy"
+          onClick={[Function]}
+          src="star-gold.svg"
+        />
+        <img
+          className="star m"
+          loading="lazy"
+          onClick={[Function]}
+          src="star.svg"
+        />
+        <img
+          className="star m"
+          loading="lazy"
+          onClick={[Function]}
+          src="star.svg"
+        />
+        <img
+          className="star m"
+          loading="lazy"
+          onClick={[Function]}
+          src="star.svg"
+        />
+        <img
+          className="star m"
+          loading="lazy"
+          onClick={[Function]}
+          src="star.svg"
+        />
+      </div>
+    </div>
+    <input
+      className="hidden"
+      name="rating"
+      onChange={[Function]}
+      type="number"
+      value={1}
+    />
+  </div>
+  <div
+    className="buttons"
+  >
+    <button
+      className="clear"
+      onClick={[Function]}
+      type="submit"
+    >
+      Send
+    </button>
+    <button
+      className="clear"
+      onClick={[Function]}
+    >
+      Clear
+    </button>
+  </div>
+</form>
+`;

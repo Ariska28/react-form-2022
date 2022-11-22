@@ -204,9 +204,9 @@ export const NewReviewForm = ({ className }) => {
         onChange={onRatingChange}
         type="number"
       />
-
+      
       { formError }
-
+      
       <div className={styles.buttons}>
         <button className={styles.clear}  onClick={addErrorMessage} type="submit">Send</button>
         <button className={styles.clear} onClick={() => dispatch({ type: ACTIONS.CLEAR })}>Clear</button>

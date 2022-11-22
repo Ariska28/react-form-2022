@@ -1,5 +1,5 @@
 import { NewReviewForm } from "../../components/NewReviewForm/NewReviewForm"
-import styles from "./styles.module.css"
+import styles from "./styles.module.css";
 
 export const ReviewFormPage = () => {
   return (

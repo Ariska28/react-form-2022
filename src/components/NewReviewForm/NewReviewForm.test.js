@@ -1,8 +1,28 @@
-import NewReviewForn from './NewReviewForm';
-import { render, screen } from '@testing-library/react';
+import React from "react";
+import renderer from "react-test-renderer";
+import {NewReviewForm, FormElementPicker, FormElement} from './NewReviewForm';
+import {BrowserRouter as Router} from 'react-router-dom';
 
-test("review form should be rendered", ()=> {
-  render(NewReviewForn);
-  // const userInputEl = screen.getByPlaceholderText(/username/i);
-  // expect(userInputEl).toBeInTheDocument();
+describe("Jest Snapshot test newReviewForm component", () => {
+  it("Match to DOM Snapshot", () => {
+    const domTree = renderer.create(<Router><NewReviewForm /></Router>).toJSON();
+    expect(domTree).toMatchSnapshot();
+  })
+});
+
+describe("Jest Snapshot test FormElementPicker component", () => {
+  it("Match to DOM Snapshot", () => {
+    const domTree = renderer.create(<FormElementPicker />).toJSON();
+    expect(domTree).toMatchSnapshot();
+  })
 })
+
+describe("Jest Snapshot test FormElement component", () => {
+  it("Match to DOM Snapshot", () => {
+    const domTree = renderer.create(<FormElement />).toJSON();
+    expect(domTree).toMatchSnapshot();
+  })
+})
+
+
+
