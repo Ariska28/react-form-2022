@@ -1,51 +1,23 @@
 import styles from "./styles.module.css";
 import classnames from "classnames";
+import {STATE, STATUS_MESSAGE_MAP} from "../config"
 
-const STATES = {
-  ERROR: 'error',
-  SUCCESS: 'success',
-  DISABLED: 'disabled',
-  READONLY: 'readOnly'
-}
-
-export const FormElement = ({ name, type, state }) => {
-  const pickState = {
-    type: '',
-    message: ''
-  };
-
-  if(state === STATES.ERROR) {
-    pickState.type = STATES.ERROR
-    pickState.message='The input has error'
-  }
-
-  if(state === STATES.SUCCESS) {
-    pickState.type = STATES.SUCCESS
-    pickState.message='All right'
-  }
-
-  if(state === STATES.DISABLED) {
-    pickState.type = STATES.DISABLED
-  }
-
-  if(state === STATES.READONLY) {
-    pickState.type = STATES.READONLY
-  }
+export const FormElement = ({ name, type, state, value }) => {
 
   return (
     <div 
       className={classnames(styles.formControl)}
-      status={pickState.type}
+      status={state}
     >
       <label htmlFor={name}>{name}</label>
        <input
         name={name}
         type={type}
-        value=""
-        disabled={pickState.type === 'disabled' ? true : false}
-        readOnly={pickState.type === 'readOnly' ? true : false}
+        value={value}
+        disabled={state === STATE.DISABLED ? true : false}
+        readOnly={state === STATE.READONLY ? true : false}
       />
-      {pickState.message ? <span>{pickState.message}</span> : ''}
+      {STATUS_MESSAGE_MAP[state] ? <span>{STATUS_MESSAGE_MAP[state]}</span> : ''}
     </div>
   )
 }

@@ -1,32 +1,36 @@
 import styles from "./styles.module.css";
 import { FormElement } from "./NewReviewFormElement/NewReviewFormElement";
+import {STATE, TYPE} from "./config"
 
 export const NewReviewForm = ({ className }) => {
-
   return (
     <form className={className}>
       <FormElement 
         name="Error" 
-        type="text"
-        state="error"
+        type={TYPE.TEXT}
+        state={STATE.ERROR}
+        value="test"
       />
 
       <FormElement 
         name="Succes" 
-        type="text"
-        state="success"
+        type={TYPE.TEXT}
+        state={STATE.SUCCESS}
+        value="test"
       />
 
       <FormElement 
         name="Read Only" 
-        type="text"
-        state="readOnly"
+        type={TYPE.TEXT}
+        state={STATE.READONLY}
+        value="test"
       />
 
       <FormElement 
         name="Disabled" 
-        type="text"
-        state="disabled"
+        type={TYPE.TEXT}
+        state={STATE.DISABLED}
+        value="test"
       />
     
       <div className={styles.buttons}>

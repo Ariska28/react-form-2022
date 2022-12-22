@@ -23,18 +23,18 @@
   margin-bottom: 20px;
 }
 
-[status="error"] span {
+[status="ERROR"] span {
   color: var(--color-error);
 }
 
-[status="success"] span {
+[status="SUCCESS"] span {
   color: var(--color-success);
 }
 
-[status="error"] input {
+[status="ERROR"] input {
   border: 2px solid var(--color-error);
 }
 
-[status="success"] input {
+[status="SUCCESS"] input {
   border: 2px solid var(--color-success);
 }
