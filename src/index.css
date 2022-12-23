@@ -27,3 +27,46 @@ code {
   --color-error: rgb(182, 82, 82);
   --color-success: rgb(59, 113, 59);
 }
+
+/* For storybook */
+
+.formControl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.formControl label {
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: var(--color-header-bg);
+}
+
+.formControl input {
+  height: 30px;
+  border: 1px solid var(--color-primary);
+  border-radius: 5px;
+  width: 100%;
+  padding-left: 10px;
+  outline: none;
+}
+
+.formControl:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+[status="ERROR"] span {
+  color: var(--color-error);
+}
+
+[status="SUCCESS"] span {
+  color: var(--color-success);
+}
+
+[status="ERROR"] input {
+  border: 2px solid var(--color-error);
+}
+
+[status="SUCCESS"] input {
+  border: 2px solid var(--color-success);
+}
