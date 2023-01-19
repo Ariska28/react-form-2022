@@ -1,24 +1,10 @@
 import styles from "./styles.module.css";
 import { FormElement } from "./NewReviewFormElement/NewReviewFormElement";
-import {STATE, TYPE} from "./config"
+import {STATE, TYPE, INITIAL_FORM_VALUE, FORM_MESSAGES} from "./config"
 import { useReducer } from "react";
 import { useState } from "react";
 
-const INITIAL_FORM_VALUE = {
-  name: "",
-  text: "",
-  email: "",
-};
-
-const FORM_MESSAGES = {
-  default: "",
-  error: <span className={styles.error}>Form has error, please check it</span>,
-  success: <span className={styles.success}>Everething is cool</span>,
-  empty: <span className={styles.error}>Some fileds don't filled, please fix it</span>
-}
-
 const form_element_states = {};
-
 
 const ACTIONS = {
   setName: "setName",
@@ -53,7 +39,6 @@ const formReducer = (state, action) => {
     default: 
       return state;
   }
-
 }
 
 export const NewReviewForm = ({ className }) => {
