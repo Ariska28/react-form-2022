@@ -8,6 +8,16 @@
     font-weight: 600;
     width: 100%;
   }
+
+  .error {
+    color: var(--color-error);
+    margin: 20px 0;
+  }
+
+  .success {
+    color: var(--color-success);
+    margin: 20px 0;
+  }
   
   .clear:hover {
     color: var(--color-white);
