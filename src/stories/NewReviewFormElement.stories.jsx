@@ -1,24 +1,29 @@
 import { FormElement } from "../components/NewReviewForm/NewReviewFormElement/NewReviewFormElement";
 import { TYPE, STATE } from "../components/NewReviewForm/config";
+import { useState } from "react";
 
 export default {
   title: 'FormElement',
   component: FormElement,
   argTypes: {
-    type: { control: "select", options: [TYPE.TEXT, TYPE.EMAIL ], default: TYPE.TEXT },
-    state: { control: "select", options: [STATE.SUCCESS, STATE.ERROR, STATE.DISABLED, STATE.READONLY ], default: STATE.SUCCESS }
+    type: { control: "select", options: [TYPE.TEXT, TYPE.NAME, TYPE.EMAIL], default: TYPE.NAME },
+    state: {control: "select", options: [STATE.DEFAULT, STATE.DISABLED, STATE.ERROR, STATE.READONLY, STATE.SUCCESS ], default: STATE.DEFAULT }
   },
 };
 
-const Template = (args) => <FormElement {...args} />;
+const Template = (args) => {
+  const [value, setValue] = useState('');
 
-export const Element = Template.bind({});
+  const handleOnChange = (event) => {
+    setValue(event.target.value);
+  };
 
-Element.args = {
-  name: "Input",
-  type: TYPE.TEXT,
-  state: STATE.SUCCESS,
-  value: "Success",
+  return <FormElement  value={value} onChange={handleOnChange} {...args} />
+}
+
+export const Primary = Template.bind({});
+Primary.args = {
+  name:"Text",
+  state: STATE.DEFAULT,
+  type: TYPE.TEXT 
 };
-
-
