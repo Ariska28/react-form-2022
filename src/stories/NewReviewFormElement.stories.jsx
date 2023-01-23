@@ -11,14 +11,33 @@ export default {
   },
 };
 
+const form_element_states = {};
+
 const Template = (args) => {
   const [value, setValue] = useState('');
+  const [state, setState] = useState([TYPE.NAME, STATE.DEFAULT]);
 
+  const handleState = (state) => {
+    setState(state);
+  }
+
+  form_element_states[state[0]] = state[1];
+  
   const handleOnChange = (event) => {
     setValue(event.target.value);
   };
 
-  return <FormElement  value={value} onChange={handleOnChange} {...args} />
+  return (
+    <>
+      <span>{state[1]}</span>
+
+      <FormElement  value={value} 
+                    onChange={handleOnChange} 
+                    handleState={handleState} 
+                    {...args} 
+      />
+    </>
+  )
 }
 
 export const Primary = Template.bind({});

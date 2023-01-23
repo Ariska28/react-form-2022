@@ -10,7 +10,7 @@ const isEmailCorrect = (value) => {
   return !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) ? false : true
 }
 
-export const FormElement = ({ name, type, state = STATE.DEFAULT, onChange, value,  handleState = () => {}}) => {
+export const FormElement = ({ name, type, state = STATE.DEFAULT, onChange, value,  handleState }) => {
     if(value) {
       switch(type) {
         case TYPE.TEXT: 
